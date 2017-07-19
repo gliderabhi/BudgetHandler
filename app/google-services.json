@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "587387643590",
+    "firebase_url": "https://budgethandler-4dd29.firebaseio.com",
+    "project_id": "budgethandler-4dd29",
+    "storage_bucket": "budgethandler-4dd29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587387643590:android:314f240c4d591a6d",
+        "android_client_info": {
+          "package_name": "com.example.munnasharma.budgethandler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587387643590-1kgcicbb7a1bf70vb2nsd8h3uri1ni7s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.munnasharma.budgethandler",
+            "certificate_hash": "55e27cba94a268e315ec9c5bbc98b430901db549"
+          }
+        },
+        {
+          "client_id": "587387643590-g7jmu314luug5974tf01mri8idj8bce6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSCPAg-7mZVg6IlvMBXZKmiFODjDo0jEo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587387643590-g7jmu314luug5974tf01mri8idj8bce6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/HeadCard"
+        android:layout_margin="20dp"
+        android:translationZ="5dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/CreditLay">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount in wallet"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rs 2540"
+            android:textSize="20dp"
+            android:id="@+id/CreditValue"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BalanceLay"
+        android:layout_below="@+id/CreditLay">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remaining balance in wallet"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rs 2540"
+            android:id="@+id/BalanceText"
+            android:textSize="20dp"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/expenseList"
+        android:layout_below="@+id/HeadCard"
+        tools:listitem="@layout/expense_list_item"
+        />
+</RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/FLoatingButtonAdd"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="25dp"
+        android:src="@android:drawable/ic_input_add"
+        />
+</android.support.design.widget.CoordinatorLayout>

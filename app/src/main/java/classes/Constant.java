@@ -11,6 +11,7 @@ public class Constant {
     public static final String Balance="Balance";
     public  static final  String Date="Date";
     public static final String Amount="Amount";
+    public static final String UserDetails="Users";
     public static final String Category="Category";
     public static final String CategoryImage="categoryImage";
     public static final String Email="email";

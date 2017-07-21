@@ -1,6 +1,8 @@
 package com.example.munnasharma.budgethandler;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,13 +19,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import classes.Constant;
+import classes.Encryption;
 import classes.User;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends Activity {
 
     private FirebaseUser user;
     private Intent i;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private int RC_SIGN_IN=1;
+    private String encrypt;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseDatabase mFirebaseDatabase;
@@ -31,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
         Initialize();
     }
     private void Initialize(){
@@ -43,6 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+                    createUser(user);
                     i=new Intent(getApplicationContext(),ShowExpenses.class);
                     startActivity(i);
 
@@ -64,6 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         try {
             if (requestCode == RC_SIGN_IN) {
                 if (resultCode == RESULT_OK) {
@@ -73,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                         createUser(user);
 
-                        i = new Intent(getApplicationContext(), ShowExpenses.class);
+                        i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);
 
                         Toast.makeText(getApplicationContext(), "Logged In", Toast.LENGTH_SHORT).show();
@@ -96,14 +105,26 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+
     private void createUser(FirebaseUser user) {
         //final String newFriendEncodedEmail = encodeEmail(newFriendEmail);
+
+       try {
+            encrypt = Encryption.main(encodeEmail(user.getEmail()));
+            sharedPreferences=getApplicationContext().getSharedPreferences(Constant.MYPref,MODE_PRIVATE);
+            editor=sharedPreferences.edit();
+           editor.putString(Constant.Encrypted,encrypt);
+           editor.commit();
+
+       }catch (Exception e){
+           Log.i("Error",e.toString());
+       }
         try{
-            final DatabaseReference userRef = mFirebaseDatabase.getReference(Constant.UserDetails+"/"+encodeEmail(user.getEmail()));
+            final DatabaseReference userRef = mFirebaseDatabase.getReference(Constant.UserDetails);
             Map<String, Object> map3 = new HashMap<>();
             User usr =new User(user.getDisplayName(),user.getEmail());
-            usr.setUid(userRef.push().getKey());
-            map3.put(userRef.push().getKey(),usr);
+            usr.setUid(encrypt);
+            map3.put(encodeEmail(user.getEmail()),usr);
             userRef.updateChildren(map3);
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
@@ -111,18 +132,15 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+   /* @Override
     protected void onResume() {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
-
+*/
     @Override
     public void onStart(){
         super.onStart();
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
     @Override

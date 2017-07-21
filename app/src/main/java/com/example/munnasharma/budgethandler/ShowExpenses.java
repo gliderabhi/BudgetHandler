@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +38,7 @@ public class ShowExpenses extends AppCompatActivity {
     private FirebaseDatabase mfirebsse;
     private DatabaseReference tablesData,expenseRef;
     private FirebaseListAdapter mAdaptor;
+    private FirebaseAuth mAuth;
     private ProgressDialog pr;
     private String tableName;
     private float credit;
@@ -59,12 +61,6 @@ public class ShowExpenses extends AppCompatActivity {
         credit=sharedPreferences.getFloat(Constant.Credit,00);
         balance=sharedPreferences.getFloat(Constant.Balance,00);
 
-        Log.i("Errro",tableName+" "+credit+" "+balance);
-        if(tableName==null){
-            Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
-            finish();
-        }
-        Log.i("passed Data",tableName+"/"+credit+"/"+balance);
        Initialize();
         pr=ProgressDialog.show(ShowExpenses.this,"Wait","",true);
         PopulateList();
@@ -157,8 +153,9 @@ public class ShowExpenses extends AppCompatActivity {
         creditText.setText(String.valueOf(credit));
         BalanceText.setText(String.valueOf(balance));
 
+        mAuth=FirebaseAuth.getInstance();
         mfirebsse=FirebaseDatabase.getInstance();
-        tablesData=FirebaseDatabase.getInstance().getReference().child(tableName);
+        tablesData=FirebaseDatabase.getInstance().getReference(tableName);
         expenseRef=FirebaseDatabase.getInstance().getReference().child(tableName);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,5 +164,9 @@ public class ShowExpenses extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    private static String encodeEmail(String userEmail) {
+        return userEmail.replace(".", ",");
     }
 }

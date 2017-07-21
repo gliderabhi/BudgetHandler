@@ -15,5 +15,6 @@ public class Constant {
     public static final String Category="Category";
     public static final String CategoryImage="categoryImage";
     public static final String Email="email";
+    public static final String Encrypted="Encrypted";
     public static final String MYPref="com.example.munnasharma.budgethandler.sharedPref";
 }

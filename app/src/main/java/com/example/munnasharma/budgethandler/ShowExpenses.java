@@ -23,8 +23,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.w3c.dom.Text;
 
 import classes.Constant;
 import classes.ExpensesOrAddition;
@@ -48,8 +51,10 @@ public class ShowExpenses extends AppCompatActivity {
      private FloatingActionButton fab;
     private Intent i;
     private String timeStamp;
-    private Float amount;
-    private String CategoryName,CategoryImageUrl;
+    private Float amount,expenditure;
+    private TextView expensediture;
+    private DatabaseReference tableRef;
+    private String CategoryName,CategoryImageUrl,comment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +63,7 @@ public class ShowExpenses extends AppCompatActivity {
 
         sharedPreferences=getSharedPreferences(Constant.MYPref, Context.MODE_PRIVATE);
         tableName=sharedPreferences.getString(Constant.TableName,null);
-        credit=sharedPreferences.getFloat(Constant.Credit,00);
-        balance=sharedPreferences.getFloat(Constant.Balance,00);
+       changeValues();
 
        Initialize();
         pr=ProgressDialog.show(ShowExpenses.this,"Wait","",true);
@@ -72,15 +76,17 @@ public class ShowExpenses extends AppCompatActivity {
 
                 TextView categoryName=(TextView)view.findViewById(R.id.Category);
                 ImageView categoryImg=(ImageView)view.findViewById(R.id.CategoryImage);
+                TextView extraComment=(TextView)view.findViewById(R.id.CommentText);
                 TextView amoount=(TextView)view.findViewById(R.id.AmountExpended);
                 TextView timeStmp=(TextView)view.findViewById(R.id.TimeStamp);
 
                 timeStamp=expensesOrAddition.getTimeStamp();
                 amount=expensesOrAddition.getAmount();
+                comment=expensesOrAddition.getExtraComment();
                 CategoryImageUrl=expensesOrAddition.getCategoryImageUrl();
                 CategoryName=expensesOrAddition.getCategoryName();
 
-                Log.i("Errro",timeStamp+" "+amount+ " "+CategoryName+" "+CategoryImageUrl);
+                Log.i(Constant.LOGTAG,timeStamp+" "+amount+ " "+CategoryName+" "+CategoryImageUrl);
 
                 try {
                     if (CategoryName != null) {
@@ -92,9 +98,12 @@ public class ShowExpenses extends AppCompatActivity {
                     if (timeStamp != null) {
                         timeStmp.setText(timeStamp);
                     }
+                    if(comment!=null){
+                        extraComment.setText(comment);
+                    }
                 }catch (Exception e){
 
-                    Log.i("Errro",e.toString());
+                    Log.i(Constant.LOGTAG,e.toString());
                 }
                 expenseRef.addChildEventListener(new ChildEventListener() {
                     @Override
@@ -149,9 +158,11 @@ public class ShowExpenses extends AppCompatActivity {
         creditText=(TextView) findViewById(R.id.CreditValue);
         BalanceText=(TextView) findViewById(R.id.BalanceText);
         fab=(FloatingActionButton)findViewById(R.id.FLoatingButtonAdd);
+        expensediture=(TextView) findViewById(R.id.ExpenditureText);
 
         creditText.setText(String.valueOf(credit));
         BalanceText.setText(String.valueOf(balance));
+        expensediture.setText(String.valueOf(expenditure));
 
         mAuth=FirebaseAuth.getInstance();
         mfirebsse=FirebaseDatabase.getInstance();
@@ -166,6 +177,54 @@ public class ShowExpenses extends AppCompatActivity {
         });
     }
 
+    private void changeValues(){
+        String userEmail=FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        tableRef=FirebaseDatabase.getInstance().getReference()
+                .child(Constant.UserDetails+"/"+encodeEmail(userEmail)+"/"+Constant.Tables+"/"+tableName+"/credit");
+        tableRef.addListenerForSingleValueEvent(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //credit=dataSnapshot.getValue().getClass();
+                Log.i(Constant.LOGTAG,dataSnapshot.toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        tableRef=FirebaseDatabase.getInstance().getReference()
+                .child(Constant.UserDetails+"/"+encodeEmail(userEmail)+"/"+Constant.Tables+"/"+tableName+"/balance");
+        tableRef.addListenerForSingleValueEvent(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               // balance= Float.valueOf((Float) dataSnapshot.getValue());
+                Log.i(Constant.LOGTAG,dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        tableRef=FirebaseDatabase.getInstance().getReference()
+                .child(Constant.UserDetails+"/"+encodeEmail(userEmail)+"/"+Constant.Tables+"/"+tableName+"/expenditure");
+        tableRef.addListenerForSingleValueEvent(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               // expenditure= Float.valueOf((Float) dataSnapshot.getValue());
+                Log.i(Constant.LOGTAG,dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     private static String encodeEmail(String userEmail) {
         return userEmail.replace(".", ",");
     }

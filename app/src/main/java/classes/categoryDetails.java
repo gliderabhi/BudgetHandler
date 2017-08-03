@@ -5,7 +5,18 @@ package classes;
  */
 
 public class categoryDetails {
-    private String CategoryName,imageurl;
+    private String CategoryName;
+    private String imageurl;
+    private String multiFac;
+
+    public String getMultiFac() {
+        return multiFac;
+    }
+
+    public void setMultiFac(String multiFac) {
+        this.multiFac = multiFac;
+    }
+
    public categoryDetails(){
 
     }

@@ -40,12 +40,24 @@
             android:layout_toEndOf="@+id/CategoryImage"
             android:layout_marginRight="20dp"
             android:background="#003"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/CommentText"
+            android:text=""
+            android:layout_below="@+id/Category"
+            android:layout_marginLeft="30dp"
+            android:textStyle="italic"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/CategoryImage"
+            android:textSize="17dp"
+            />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/AmountExpended"
         android:text="Rs 200"
-        android:layout_below="@+id/Category"
+        android:layout_below="@+id/CommentText"
         android:layout_marginLeft="30dp"
         android:textStyle="italic"
         android:layout_marginTop="20dp"

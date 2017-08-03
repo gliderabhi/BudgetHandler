@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="40dp"
+    tools:context="com.example.munnasharma.budgethandler.CreateTable">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26dp"
+        android:text="Create table"
+        android:id="@+id/CreateTableTxt"
+        android:textColor="#000"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/TableNameLay"
+        android:layout_below="@+id/CreateTableTxt"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name of table"
+            android:textSize="20dp"
+            android:textColor="#000"
+            android:layout_marginTop="20dp"/>
+        <EditText
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:hint="Name"
+            android:id="@+id/NameBox"
+        android:layout_marginTop="20dp"
+        />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TableNameLay"
+        android:id="@+id/CreditLay"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Available balance "
+            android:textSize="20dp"
+            android:textColor="#000"
+            android:layout_marginTop="20dp"/>
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:hint="Credit"
+            android:id="@+id/CreditBox"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="20dp"
+            />
+    </LinearLayout>
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_custom"
+            android:layout_centerHorizontal="true"
+            android:text="+"
+            android:id="@+id/AddTableButton"
+            android:textColor="#fff"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

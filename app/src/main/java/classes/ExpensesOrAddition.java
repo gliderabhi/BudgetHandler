@@ -7,7 +7,16 @@ package classes;
 public class ExpensesOrAddition {
     private String timeStamp;
     private Float amount;
+    private String extraComment;
     private String CategoryName,CategoryImageUrl;
+
+    public String getExtraComment() {
+        return extraComment;
+    }
+
+    public void setExtraComment(String extraComment) {
+        this.extraComment = extraComment;
+    }
 
     public void setAmount(Float amount) {
         this.amount = amount;

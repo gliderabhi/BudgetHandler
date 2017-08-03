@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/CreditLay">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="Amount in wallet"
             android:textSize="20dp"
@@ -35,13 +35,34 @@
             android:id="@+id/CreditValue"
             android:layout_margin="10dp"/>
     </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ExpenditureLay"
+                android:layout_below="@+id/CreditLay"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="Expenditure"
+                    android:textSize="20dp"
+                    android:layout_margin="10dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rs 2540"
+                    android:id="@+id/ExpenditureText"
+                    android:textSize="20dp"
+                    android:layout_margin="10dp"/>
+            </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/BalanceLay"
-        android:layout_below="@+id/CreditLay">
+        android:layout_below="@+id/ExpenditureLay">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="Remaining balance in wallet"
             android:textSize="20dp"

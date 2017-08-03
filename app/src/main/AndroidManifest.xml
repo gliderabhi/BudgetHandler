@@ -11,20 +11,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".ShowExpenses" />
         <activity android:name=".DataEntry" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".SelectCategory" />
         <activity android:name=".SignUpActivity">
+
+        </activity>
+        <activity android:name=".SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".CheckUserService"/>
-        <activity android:name=".SplashActivity"></activity>
+        <activity android:name=".CreateTable"></activity>
     </application>
 
 </manifest>

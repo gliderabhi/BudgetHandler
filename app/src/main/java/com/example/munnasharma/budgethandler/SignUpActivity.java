@@ -38,6 +38,7 @@ public class SignUpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        Log.i(Constant.LOGTAG,"Activity "+getApplicationContext().toString()+" startted");
         Initialize();
     }
     private void Initialize(){
@@ -101,7 +102,7 @@ public class SignUpActivity extends Activity {
 
         } catch (Exception e) {
 
-            Log.i("Error",e.toString());
+            Log.i(Constant.LOGTAG,e.toString());
         }
     }
 
@@ -117,18 +118,18 @@ public class SignUpActivity extends Activity {
            editor.commit();
 
        }catch (Exception e){
-           Log.i("Error",e.toString());
+           Log.i(Constant.LOGTAG,e.toString());
        }
         try{
-            final DatabaseReference userRef = mFirebaseDatabase.getReference(Constant.UserDetails);
+            final DatabaseReference userRef = mFirebaseDatabase.getReference(Constant.UserDetails+"/"+encodeEmail(user.getEmail()));
             Map<String, Object> map3 = new HashMap<>();
             User usr =new User(user.getDisplayName(),user.getEmail());
             usr.setUid(encrypt);
-            map3.put(encodeEmail(user.getEmail()),usr);
+            map3.put(Constant.UserData,usr);
             userRef.updateChildren(map3);
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
-            Log.i("Error",e.toString());
+            Log.i(Constant.LOGTAG,e.toString());
         }
     }
 

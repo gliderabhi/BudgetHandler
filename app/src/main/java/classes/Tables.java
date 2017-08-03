@@ -6,7 +6,15 @@ package classes;
 
 public class Tables {
     private String tablesName,tableMonth;
-    private float credit,balance;
+    private float credit,balance,expenditure;
+
+    public float getExpenditure() {
+        return expenditure;
+    }
+
+    public void setExpenditure(float expenditure) {
+        this.expenditure = expenditure;
+    }
 
     public float getCredit() {
         return credit;
@@ -24,7 +32,7 @@ public class Tables {
         this.balance = balance;
     }
 
-    Tables(){
+   public Tables(){
 
     }
 

@@ -38,6 +38,7 @@ public class SelectCategory extends AppCompatActivity {
     private TextView waitText;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private int multiFac=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class SelectCategory extends AppCompatActivity {
             CategoryList = (ListView) findViewById(R.id.CategoryList);
             PopulateList();
         }catch(Exception e){
-            Log.i("error",e.toString());
+            Log.i(Constant.LOGTAG,e.toString());
         }
     }
     public void PopulateList(){
@@ -65,6 +66,10 @@ public class SelectCategory extends AppCompatActivity {
                    ImageView categoryImage = (ImageView) view.findViewById(R.id.CategoryItemImage);
                    String imageUrl = categoryDetails.getImageurl();
 
+                   switch(categoryDetails.getMultiFac()){
+                       case "1": multiFac=1;break;
+                       case "2": multiFac=-1;break;
+                   }
                    mStorage = mStorage.child(imageUrl);
                    Glide.with(view.getContext())
                            .using(new FirebaseImageLoader())
@@ -72,7 +77,7 @@ public class SelectCategory extends AppCompatActivity {
                            .bitmapTransform(new CropCircleTransformation(view.getContext()))
                            .into(categoryImage);
                }catch(Exception e){
-                   Log.i("error",e.toString());
+                   Log.i(Constant.LOGTAG,e.toString());
                }
                 tableRef.addChildEventListener(new ChildEventListener() {
                     @Override
@@ -82,19 +87,19 @@ public class SelectCategory extends AppCompatActivity {
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        Log.i("Error","Childd chnaged");
+                        Log.i(Constant.LOGTAG,"Childd chnaged");
                         PopulateList();
                     }
 
                     @Override
                     public void onChildRemoved(DataSnapshot dataSnapshot) {
-                        Log.i("Error","Childd remoed");
+                        Log.i(Constant.LOGTAG,"Childd remoed");
                         PopulateList();
                     }
 
                     @Override
                     public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                        Log.i("Error","Childd moved");
+                        Log.i(Constant.LOGTAG,"Childd moved");
                         PopulateList();
                     }
 
@@ -117,6 +122,7 @@ public class SelectCategory extends AppCompatActivity {
                 editor=sharedPreferences.edit();
                 editor.putString(Constant.Category,categoryDetails.getCategoryName());
                 editor.putString(Constant.CategoryImage,categoryDetails.getImageurl());
+                editor.putInt(Constant.CategoryMultiply,multiFac);
                 editor.commit();
                 Intent i =new Intent(SelectCategory.this,DataEntry.class);
                 startActivity(i);
